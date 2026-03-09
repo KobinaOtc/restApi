@@ -126,6 +126,30 @@ app.get('/books', (req, res) => {
 app.get('/book/:isbn', (req, res) => {
     // Reading isbn from the URL
     const isbn = req.params.isbn;
+
+    // Searching books for the isbn
+    for (let book of books) { // Looping through the books
+        if (book.isbn === isbn) {// If the isbn matches
+            res.json(book);// Send the book as response
+            return;
+        }
+    }
+
+    // Sending 404 when not found something is a good practice
+    res.status(404).send('Book not found');
+});
+
+app.delete('/book/:isbn', (req, res) => {
+    const isbn = req.params.isbn;
+
+    books = books.filter(book => {
+        if (book.isbn !== isbn) {
+            return true;
+        }
+        return false;
+    });
+
+    res.send('Book deleted successfully!');
 });
 
 app.listen(port, () => console.log(`Book API listening on port ${port}!`));

@@ -3,7 +3,13 @@ const setEditModal = (isbn) => {
 }
 
 const deleteBook = (isbn) => {
-    // We will implement this later
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.open("DELETE", `http://localhost:3000/book/${isbn}`, false); // false for synchronous request
+    xhttp.send(); // Send the delete request to the server
+
+    // Reload the page to get the updated list of books
+    location.reload();
 }
 
 const loadBooks = () => {
